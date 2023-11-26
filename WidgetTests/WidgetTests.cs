@@ -80,16 +80,52 @@ namespace WidgetTests
     public class SquareTests
     {
         [TestMethod]
-        public void Draw_WhenCalled_ReturnsEmptyString()
+        public void Constructor_ValidParameters_SetsPropertiesCorrectly()
         {
             // Arrange
-            var square = new Square();
+            int x = 15, y = 30, size = 35;
+
+            // Act
+            var square = new Square(x, y, size);
+
+            // Assert
+            Assert.AreEqual(x, square.X);
+            Assert.AreEqual(y, square.Y);
+            Assert.AreEqual(size, square.Size);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void Constructor_NegativeSize_ThrowsArgumentException()
+        {
+            // Arrange & Act
+            var square = new Square(15, 30, -35);
+
+            // Assert is handled by ExpectedException
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void Constructor_ZeroSize_ThrowsArgumentException()
+        {
+            // Arrange & Act
+            var square = new Square(15, 30, 0);
+
+            // Assert is handled by ExpectedException
+        }
+
+        [TestMethod]
+        public void Draw_WhenCalled_ReturnsCorrectStringFormat()
+        {
+            // Arrange
+            var square = new Square(15, 30, 35);
+            var expectedOutput = "Square (15,30) size=35";
 
             // Act
             var result = square.Draw();
 
             // Assert
-            Assert.AreEqual("", result);
+            Assert.AreEqual(expectedOutput, result);
         }
     }
 

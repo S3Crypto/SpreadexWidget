@@ -207,16 +207,52 @@ namespace WidgetTests
     public class CircleTests
     {
         [TestMethod]
-        public void Draw_WhenCalled_ReturnsEmptyString()
+        public void Constructor_ValidParameters_SetsPropertiesCorrectly()
         {
             // Arrange
-            var circle = new Circle();
+            int x = 1, y = 1, diameter = 300;
+
+            // Act
+            var circle = new Circle(x, y, diameter);
+
+            // Assert
+            Assert.AreEqual(x, circle.X);
+            Assert.AreEqual(y, circle.Y);
+            Assert.AreEqual(diameter, circle.Diameter);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void Constructor_NegativeDiameter_ThrowsArgumentException()
+        {
+            // Arrange & Act
+            var circle = new Circle(1, 1, -300);
+
+            // Assert is handled by ExpectedException
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void Constructor_ZeroDiameter_ThrowsArgumentException()
+        {
+            // Arrange & Act
+            var circle = new Circle(1, 1, 0);
+
+            // Assert is handled by ExpectedException
+        }
+
+        [TestMethod]
+        public void Draw_WhenCalled_ReturnsCorrectStringFormat()
+        {
+            // Arrange
+            var circle = new Circle(1, 1, 300);
+            var expectedOutput = "Circle (1,1) size=300";
 
             // Act
             var result = circle.Draw();
 
             // Assert
-            Assert.AreEqual("", result);
+            Assert.AreEqual(expectedOutput, result);
         }
     }
 

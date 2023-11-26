@@ -1,4 +1,4 @@
-﻿namespace SpreadexWidget
+﻿namespace SpreadexWidget.Widgets
 {
 	public interface IWidget
 	{

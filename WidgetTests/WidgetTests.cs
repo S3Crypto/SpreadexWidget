@@ -260,16 +260,85 @@ namespace WidgetTests
     public class TextboxTests
     {
         [TestMethod]
-        public void Draw_WhenCalled_ReturnsEmptyString()
+        public void Constructor_ValidParameters_SetsPropertiesCorrectly()
         {
             // Arrange
-            var textbox = new Textbox();
+            int x = 5, y = 5, width = 200, height = 100;
+            string text = "sample text";
+
+            // Act
+            var textbox = new Textbox(x, y, width, height, text);
+
+            // Assert
+            Assert.AreEqual(x, textbox.X);
+            Assert.AreEqual(y, textbox.Y);
+            Assert.AreEqual(width, textbox.Width);
+            Assert.AreEqual(height, textbox.Height);
+            Assert.AreEqual(text, textbox.Text);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void Constructor_NegativeWidth_ThrowsArgumentException()
+        {
+            // Arrange & Act
+            var textbox = new Textbox(5, 5, -200, 100, "sample text");
+
+            // Assert is handled by ExpectedException
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void Constructor_NegativeHeight_ThrowsArgumentException()
+        {
+            // Arrange & Act
+            var textbox = new Textbox(5, 5, 200, -100, "sample text");
+
+            // Assert is handled by ExpectedException
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void Constructor_ZeroWidth_ThrowsArgumentException()
+        {
+            // Arrange & Act
+            var textbox = new Textbox(5, 5, 0, 100, "sample text");
+
+            // Assert is handled by ExpectedException
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void Constructor_ZeroHeight_ThrowsArgumentException()
+        {
+            // Arrange & Act
+            var textbox = new Textbox(5, 5, 200, 0, "sample text");
+
+            // Assert is handled by ExpectedException
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Constructor_NullText_ThrowsArgumentNullException()
+        {
+            // Arrange & Act
+            var textbox = new Textbox(5, 5, 200, 100, null);
+
+            // Assert is handled by ExpectedException
+        }
+
+        [TestMethod]
+        public void Draw_WhenCalled_ReturnsCorrectStringFormat()
+        {
+            // Arrange
+            var textbox = new Textbox(5, 5, 200, 100, "sample text");
+            var expectedOutput = "Textbox (5,5) width=200 height=100 Text=\"sample text\"";
 
             // Act
             var result = textbox.Draw();
 
             // Assert
-            Assert.AreEqual("", result);
+            Assert.AreEqual(expectedOutput, result);
         }
     }
 }

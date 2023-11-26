@@ -133,16 +133,73 @@ namespace WidgetTests
     public class EllipseTests
     {
         [TestMethod]
-        public void Draw_WhenCalled_ReturnsEmptyString()
+        public void Constructor_ValidParameters_SetsPropertiesCorrectly()
         {
             // Arrange
-            var ellipse = new Ellipse();
+            int x = 100, y = 150, diameterH = 300, diameterV = 200;
+
+            // Act
+            var ellipse = new Ellipse(x, y, diameterH, diameterV);
+
+            // Assert
+            Assert.AreEqual(x, ellipse.X);
+            Assert.AreEqual(y, ellipse.Y);
+            Assert.AreEqual(diameterH, ellipse.DiameterH);
+            Assert.AreEqual(diameterV, ellipse.DiameterV);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void Constructor_NegativeHorizontalDiameter_ThrowsArgumentException()
+        {
+            // Arrange & Act
+            var ellipse = new Ellipse(100, 150, -300, 200);
+
+            // Assert is handled by ExpectedException
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void Constructor_NegativeVerticalDiameter_ThrowsArgumentException()
+        {
+            // Arrange & Act
+            var ellipse = new Ellipse(100, 150, 300, -200);
+
+            // Assert is handled by ExpectedException
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void Constructor_ZeroHorizontalDiameter_ThrowsArgumentException()
+        {
+            // Arrange & Act
+            var ellipse = new Ellipse(100, 150, 0, 200);
+
+            // Assert is handled by ExpectedException
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void Constructor_ZeroVerticalDiameter_ThrowsArgumentException()
+        {
+            // Arrange & Act
+            var ellipse = new Ellipse(100, 150, 300, 0);
+
+            // Assert is handled by ExpectedException
+        }
+
+        [TestMethod]
+        public void Draw_WhenCalled_ReturnsCorrectStringFormat()
+        {
+            // Arrange
+            var ellipse = new Ellipse(100, 150, 300, 200);
+            var expectedOutput = "Ellipse (100,150) diameterH = 300 diameterV = 200";
 
             // Act
             var result = ellipse.Draw();
 
             // Assert
-            Assert.AreEqual("", result);
+            Assert.AreEqual(expectedOutput, result);
         }
     }
 
